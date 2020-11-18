@@ -5,15 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fafafe"
-    tools:context=".MainActivity">
+    tools:context=".SignUp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
@@ -28,8 +29,7 @@
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:gravity="center"
-            android:hint="Enter your Email"
-            android:inputType="textEmailAddress"
+            android:hint="Enter your Name"
             android:textSize="18dp"></EditText>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -38,7 +38,7 @@
         android:id="@+id/linearLayoutCompat2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,15 +48,15 @@
             android:id="@+id/imageview_login2"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:srcCompat="@drawable/ic_baseline_vpn_key_24"></ImageView>
+            app:srcCompat="@drawable/ic_baseline_email_24"></ImageView>
 
         <EditText
             android:id="@+id/edittext_login2"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:hint="Enter your password"
             android:gravity="center"
-            android:inputType="textPassword"
+            android:hint="Enter your Email"
+            android:inputType="textEmailAddress"
             android:textSize="18dp"></EditText>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -65,48 +65,49 @@
         android:id="@+id/button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:shadowColor="#6c4e54"
-        android:text="Login"
+        android:text="Sign Up"
         app:cornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat6" />
 
     <TextView
-        android:id="@+id/gotosignup"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Click here to SignUp"
+        android:id="@+id/gotologin"
+        android:layout_width="194dp"
+        android:layout_height="27dp"
+        android:text="Click here to go to login"
         android:textColor="#165caf"
+
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-
+        app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.120000005"></TextView>
+        app:layout_constraintVertical_bias="0.173"></TextView>
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/ptserifregular"
-        android:text="Login"
+        android:text="Sign Up"
         android:textColor="#5e3317"
         android:textSize="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.152" />
+        app:layout_constraintVertical_bias="0.077" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,10 +117,91 @@
             android:id="@+id/imageview_login3"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            app:srcCompat="@drawable/ic_baseline_vpn_key_24"></ImageView>
+
+        <EditText
+            android:id="@+id/edittext_login3"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:hint="Enter your Password"
+            android:inputType="textPassword"
+            android:textSize="18dp"></EditText>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat3">
+
+        <ImageView
+            android:id="@+id/imageview_signup"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/ic_baseline_vpn_key_24"></ImageView>
+
+        <EditText
+            android:id="@+id/edittext_signup"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:hint="Re-Enter your Password"
+            android:inputType="textPassword"
+            android:textSize="18dp"></EditText>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4">
+
+        <ImageView
+            android:id="@+id/imageview_signup1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/ic_baseline_phone_24"></ImageView>
+
+        <EditText
+            android:id="@+id/edittext_signup1"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:hint="Enter your Phone No"
+            android:inputType="phone"
+            android:textSize="18dp"></EditText>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5">
+
+        <ImageView
+            android:id="@+id/imageview_login5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:srcCompat="@drawable/ic_baseline_push_pin_24"></ImageView>
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/edittext_login3"
+            android:id="@+id/edittext_login5"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:gravity="center"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fbf8f7"
+    android:background="#fafafe"
     tools:context=".SplashActivity">
 
     <ImageView
@@ -22,11 +22,11 @@
         android:id="@+id/textView"
         android:layout_width="304dp"
         android:layout_height="68dp"
-        android:fontFamily="sans-serif-condensed"
         android:text="Feed The Hunger"
+        android:fontFamily="@font/ptserifregular"
         android:textAlignment="center"
-        android:textColor="#513939"
-        android:textSize="40dp"
+        android:textColor="#7e5b62"
+        android:textSize="39dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.579"

@@ -10,16 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
-    String[] type={"Donee","Donor"};
+public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+    String[] type={"Donee","Donor","Both"};
     private TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Spinner spin = findViewById(R.id.edittext_login3);
+        setContentView(R.layout.activity_sign_up);
+        Spinner spin = findViewById(R.id.edittext_login5);
         spin.setOnItemSelectedListener(this);
-        tv=findViewById(R.id.gotosignup);
+        tv=findViewById(R.id.gotologin);
         tv.setOnClickListener(this);
         //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,type);
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onClick(View v) {
         if(tv==v){
-            Intent i=new Intent(this,SignUp.class);
+            Intent i=new Intent(this,MainActivity.class);
             startActivity(i);
         }
     }
