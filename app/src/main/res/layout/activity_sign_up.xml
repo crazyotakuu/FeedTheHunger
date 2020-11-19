@@ -58,7 +58,6 @@
             android:id="@+id/edittext_login"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:gravity="center"
             android:hint="Enter your Name"
             android:textSize="18dp"></EditText>
 
@@ -84,7 +83,6 @@
             android:id="@+id/edittext_login2"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:gravity="center"
             android:hint="Enter your Email"
             android:inputType="textEmailAddress"
             android:textSize="18dp"></EditText>
@@ -140,7 +138,6 @@
             android:id="@+id/edittext_login3"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:gravity="center"
             android:hint="Enter your Password"
             android:inputType="textPassword"
             android:textSize="18dp"></EditText>
@@ -167,7 +164,7 @@
             android:id="@+id/edittext_signup"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:gravity="center"
+
             android:hint="Re-Enter your Password"
             android:inputType="textPassword"
             android:textSize="18dp"></EditText>
@@ -194,7 +191,7 @@
             android:id="@+id/edittext_signup1"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:gravity="center"
+
             android:hint="Enter your Phone No"
             android:inputType="phone"
             android:textSize="18dp"></EditText>
