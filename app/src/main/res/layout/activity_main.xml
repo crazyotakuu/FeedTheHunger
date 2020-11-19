@@ -106,7 +106,6 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:shadowColor="#6c4e54"
         android:text="Login"
         app:cornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"

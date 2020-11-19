@@ -9,28 +9,43 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="287dp"
-        android:layout_height="242dp"
+        android:layout_width="310dp"
+        android:layout_height="257dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.359"
+        app:layout_constraintVertical_bias="0.327"
         app:srcCompat="@drawable/ic_baseline_food_bank_24" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="304dp"
-        android:layout_height="68dp"
-        android:text="Feed The Hunger"
-        android:fontFamily="@font/ptserifregular"
-        android:textAlignment="center"
-        android:textColor="#7e5b62"
-        android:textSize="39dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.579"
+        android:orientation="vertical"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="350dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/lobsterregular"
+            android:text="Feed The Hunger"
+
+            android:layout_marginTop="20dp"
+            android:paddingTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:textAlignment="center"
+            android:textColor="#724245"
+            android:textSize="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.579"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintVertical_bias="0.0" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
