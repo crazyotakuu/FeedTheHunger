@@ -59,7 +59,7 @@
                 app:srcCompat="@drawable/ic_diet"></ImageView>
 
             <EditText
-                android:id="@+id/uname"
+                android:id="@+id/foodtype"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:hint="Enter the Type of Food"
@@ -85,7 +85,7 @@
                 app:srcCompat="@drawable/ic_weight"></ImageView>
 
             <EditText
-                android:id="@+id/uname1"
+                android:id="@+id/quantity"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:hint="Enter the Quantity of Food"
@@ -112,7 +112,7 @@
                 app:srcCompat="@drawable/ic_productdescription"></ImageView>
 
             <EditText
-                android:id="@+id/uname2"
+                android:id="@+id/des"
                 android:layout_width="250dp"
                 android:layout_height="100dp"
                 android:hint="Enter the description"
@@ -140,7 +140,7 @@
                 app:srcCompat="@drawable/ic_address"></ImageView>
 
             <EditText
-                android:id="@+id/uname3"
+                android:id="@+id/address"
                 android:layout_width="250dp"
                 android:layout_height="100dp"
                 android:hint="Enter the Address"
@@ -168,7 +168,7 @@
                 app:srcCompat="@drawable/ic_calendar"></ImageView>
 
             <EditText
-                android:id="@+id/uname4"
+                android:id="@+id/expdate"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:hint="Enter the Expiry-Date"
@@ -178,7 +178,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buttonadddon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Submit"
