@@ -14,7 +14,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:background="#255da9"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,11 +29,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="3dp"
                 android:fontFamily="@font/lobsterregular"
                 android:text="Add Donation"
                 android:textColor="#ffffff"
-                android:textSize="55dp"
+                android:textSize="45dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
             android:id="@+id/linearLayoutCompat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
             android:id="@+id/linearLayoutCompat1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
@@ -97,7 +97,7 @@
             android:id="@+id/linearLayoutCompat2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
@@ -125,7 +125,7 @@
             android:id="@+id/linearLayoutCompat3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
@@ -153,7 +153,7 @@
             android:id="@+id/linearLayoutCompat4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
@@ -169,13 +169,24 @@
 
             <EditText
                 android:id="@+id/uname4"
-                android:inputType="date"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:hint="Enter the Expiry-Date"
+                android:inputType="date"
                 android:textSize="18dp"></EditText>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4"
+            app:layout_constraintVertical_bias="0.100000024" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
