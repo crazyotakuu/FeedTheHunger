@@ -7,6 +7,7 @@
     android:background="#fafafe"
     tools:context=".SignUp">
 
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -19,6 +20,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+
+
+
 
         <TextView
             android:id="@+id/textView2"
@@ -55,7 +59,7 @@
             app:srcCompat="@drawable/ic_baseline_person_24"></ImageView>
 
         <EditText
-            android:id="@+id/edittext_login"
+            android:id="@+id/uname"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:hint="Enter your Name"
@@ -80,7 +84,7 @@
             app:srcCompat="@drawable/ic_baseline_email_24"></ImageView>
 
         <EditText
-            android:id="@+id/edittext_login2"
+            android:id="@+id/mail"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:hint="Enter your Email"
@@ -135,7 +139,7 @@
             app:srcCompat="@drawable/ic_baseline_vpn_key_24"></ImageView>
 
         <EditText
-            android:id="@+id/edittext_login3"
+            android:id="@+id/pass"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:hint="Enter your Password"
@@ -161,7 +165,7 @@
             app:srcCompat="@drawable/ic_baseline_vpn_key_24"></ImageView>
 
         <EditText
-            android:id="@+id/edittext_signup"
+            android:id="@+id/conpass"
             android:layout_width="250dp"
             android:layout_height="40dp"
 
@@ -188,7 +192,7 @@
             app:srcCompat="@drawable/ic_baseline_phone_24"></ImageView>
 
         <EditText
-            android:id="@+id/edittext_signup1"
+            android:id="@+id/mobile"
             android:layout_width="250dp"
             android:layout_height="40dp"
 
