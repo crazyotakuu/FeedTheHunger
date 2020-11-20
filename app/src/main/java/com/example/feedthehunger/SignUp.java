@@ -34,14 +34,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.Executor;
 
-public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String[] types={"Donee","Donor","Both"};
     int type;
 
     private TextView tv;
     Button signup;
     EditText uname,pass,conpass,mail,mobile;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,28 +51,35 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         pass=findViewById(R.id.pass);
         conpass=findViewById(R.id.conpass);
         mobile=findViewById(R.id.mobile);
-        setContentView(R.layout.activity_sign_up);
         Spinner spin = findViewById(R.id.edittext_login5);
         spin.setOnItemSelectedListener(this);
         signup=findViewById(R.id.button);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if(uname.getText().toString().equals("")||mail.getText().toString().equals("")||pass.getText().toString().equals("")||
+                if(uname.getText().toString().equals("")||mail.getText().toString().equals("")||pass.getText().toString().equals("")||
                         conpass.getText().toString().equals("")||mobile.getText().toString().equals("")||type==-1||!pass.getText().toString().equals(conpass.getText().toString())){
                     Toast.makeText(getApplicationContext(),"Enter all the feilds",Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 insert obj=new insert();
-                obj.execute();*/
-                Toast.makeText(SignUp.this, mail.getText().toString()+pass.getText().toString(), Toast.LENGTH_SHORT).show();
+                obj.execute();
+
 
 
             }
         });
         tv=findViewById(R.id.gotologin);
-        tv.setOnClickListener(this);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(tv==view){
+                    Intent i=new Intent(SignUp.this,MainActivity.class);
+                    startActivity(i);
+                }
+            }
+        });
         //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,types);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -92,13 +99,6 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
 
     }
 
-    @Override
-    public void onClick(View v) {
-        if(tv==v){
-            Intent i=new Intent(this,MainActivity.class);
-            startActivity(i);
-        }
-    }
 
 
     private class insert extends AsyncTask<Void, Void, Void>
@@ -116,7 +116,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         protected Void doInBackground(Void... voids) {
             mAuth = FirebaseAuth.getInstance();
             mAuth.createUserWithEmailAndPassword(mail.getText().toString(), pass.getText().toString())
-                    .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -133,9 +133,8 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
                     });
 
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
-            FirebaseUser user = mAuth.getCurrentUser();
-            mDatabase.child("users").child(mAuth.getUid()).setValue(new User(uname.getText().toString(),mail.getText().toString()
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            mDatabase.child("users").child(user.getUid()).setValue(new User(uname.getText().toString(),mail.getText().toString()
             ,pass.getText().toString(),mobile.getText().toString(),type));
 
             return null;
