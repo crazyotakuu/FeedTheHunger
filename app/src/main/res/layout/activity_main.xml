@@ -64,7 +64,7 @@
             app:srcCompat="@drawable/ic_baseline_person_24"></ImageView>
 
         <EditText
-            android:id="@+id/edittext_login"
+            android:id="@+id/edittext_loginmail"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:hint="Enter your Email"
@@ -90,7 +90,7 @@
             app:srcCompat="@drawable/ic_baseline_vpn_key_24"></ImageView>
 
         <EditText
-            android:id="@+id/edittext_login2"
+            android:id="@+id/edittext_loginpass"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:hint="Enter your password"
@@ -100,7 +100,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
+        android:id="@+id/buttonlogin"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -145,7 +145,7 @@
             app:srcCompat="@drawable/ic_baseline_push_pin_24"></ImageView>
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/edittext_login3"
+            android:id="@+id/edittext_loginspin"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:gravity="center"

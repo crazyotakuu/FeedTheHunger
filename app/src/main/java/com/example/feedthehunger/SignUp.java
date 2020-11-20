@@ -39,9 +39,9 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
     int type;
 
     private TextView tv;
-    Button signup;
-    EditText uname,pass,conpass,mail,mobile;
-    FirebaseAuth mAuth;
+    private Button signup;
+    private EditText uname,pass,conpass,mail,mobile;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +124,11 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
                             if (!task.isSuccessful()) {
                                 Toast.makeText(SignUp.this,"Authentication failed. " + task.getException(),Toast.LENGTH_LONG).show();
                             } else {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
+                                mDatabase.child("users").child(user.getUid()).setValue(new User(uname.getText().toString(),mail.getText().toString()
+                                        ,pass.getText().toString(),mobile.getText().toString(),type));
                                 Intent i=new Intent(SignUp.this,MainActivity.class);
                                 startActivity(i);
                             }
@@ -132,16 +136,14 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
                         }
                     });
 
-            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            mDatabase.child("users").child(user.getUid()).setValue(new User(uname.getText().toString(),mail.getText().toString()
-            ,pass.getText().toString(),mobile.getText().toString(),type));
 
             return null;
         }
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+
 
         }
     }
@@ -165,6 +167,8 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         }
 
     }
+
+
 
 }
 
