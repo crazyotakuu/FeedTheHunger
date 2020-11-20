@@ -126,4 +126,23 @@ public class Donor extends AppCompatActivity implements LocationListener {
             return fragmenttitle.get(position);
         }
     }
+    public class Donation{
+    public String type;
+    public String quantity;
+    public String description;
+    public String address;
+    public String expirydate;
+    public double latitude;
+    public double longitude;
+
+    public Donation(String type,String quantity,String description,String address,String expirydate,double latitude,double longitude){
+        this.type=type;
+        this.quantity=quantity;
+        this.description=description;
+        this.address=address;
+        this.expirydate=expirydate;
+        this.latitude=latitude;
+        this.longitude=longitude;
+    }
+    }
 }

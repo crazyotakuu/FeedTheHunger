@@ -59,7 +59,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 if(uname.getText().toString().equals("")||mail.getText().toString().equals("")||pass.getText().toString().equals("")||
                         conpass.getText().toString().equals("")||mobile.getText().toString().equals("")||type==-1||!pass.getText().toString().equals(conpass.getText().toString())){
-                    Toast.makeText(getApplicationContext(),"Enter all the feilds",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Enter all the fields",Toast.LENGTH_LONG).show();
                     return;
                 }
 
