@@ -144,28 +144,5 @@ public class addDonation extends Fragment implements View.OnClickListener {
         getLastKnownLocation();
 
     }
-
-
-    public class Donation{
-        public String type;
-        public String quantity;
-        public String description;
-        public String address;
-        public String expirydate;
-        public double latitude;
-        public double longitude;
-    public String userid;
-        public Donation(){};
-
-        public Donation(String userid,String type,String quantity,String description,String address,String expirydate,double latitude,double longitude){
-            this.type=type;
-            this.quantity=quantity;
-            this.description=description;
-            this.address=address;
-            this.expirydate=expirydate;
-            this.latitude=latitude;
-            this.longitude=longitude;
-            this.userid=userid;
-        }
-    }
+    
 }
