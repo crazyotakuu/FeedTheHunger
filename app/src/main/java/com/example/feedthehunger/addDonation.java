@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -51,6 +53,8 @@ public class addDonation extends Fragment implements View.OnClickListener {
     private EditText foodtype,quanity,des,address,expdate;
     private Button adddon;
     private FirebaseAuth mAuth;
+    double lat,longi;
+    private FusedLocationProviderClient mFusedLocationClient;
     public addDonation() {
         // Required empty public constructor
     }
@@ -80,6 +84,7 @@ public class addDonation extends Fragment implements View.OnClickListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -94,8 +99,38 @@ public class addDonation extends Fragment implements View.OnClickListener {
         expdate=v.findViewById(R.id.expdate);
         adddon=v.findViewById(R.id.buttonadddon);
         adddon.setOnClickListener(this);
-
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         return v;
+    }
+
+    private void getLastKnownLocation() {
+        Log.d(getTag(), "getLastKnownLocation: called.");
+
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getContext(),"Permissions",Toast.LENGTH_LONG).show();
+        }
+        mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<android.location.Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                if (task.isSuccessful()) {
+                    Location location = task.getResult();
+
+                    Log.d("latitude", String.valueOf(location.getLatitude()));
+                    Log.d("longitude", String.valueOf(location.getLongitude()));
+                    mAuth = FirebaseAuth.getInstance();
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("donations");
+                    String donId = mDatabase.push().getKey();
+                    mDatabase.child(donId).setValue(new Donation(user.getUid(),foodtype.getText().toString(),quanity.getText().toString()
+                            ,des.getText().toString(),address.getText().toString(),expdate.getText().toString(),location.getLatitude(),location.getLongitude()));
+                    Intent i=new Intent(getContext(),MainActivity.class);
+                    startActivity(i);
+                }
+            }
+        });
+
+
     }
 
 
@@ -106,14 +141,7 @@ public class addDonation extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(),"Enter all the fields",Toast.LENGTH_LONG).show();
             return;
         }
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("donations");
-        String donId = mDatabase.push().getKey();
-        mDatabase.child(donId).setValue(new Donation(user.getUid(),foodtype.getText().toString(),quanity.getText().toString()
-                ,des.getText().toString(),address.getText().toString(),expdate.getText().toString(),Donor.latitude,Donor.longitude));
-        Intent i=new Intent(getContext(),MainActivity.class);
-        startActivity(i);
+        getLastKnownLocation();
 
     }
 
