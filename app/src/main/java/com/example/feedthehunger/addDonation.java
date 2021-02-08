@@ -144,5 +144,5 @@ public class addDonation extends Fragment implements View.OnClickListener {
         getLastKnownLocation();
 
     }
-    
+
 }

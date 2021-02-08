@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -12,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +30,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -45,6 +49,7 @@ import static com.example.feedthehunger.Constants.PERMISSIONS_REQUEST_ENABLE_GPS
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String[] types={"Donee","Donor"};
+    public CurrentUser currentUser;
     private TextView tv;
     private Button login;
     private EditText mail,pass;
@@ -53,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final String TAG = "MainActivity";
     private boolean mLocationPermissionGranted = false;
     private ProgressBar mProgressBar;
+    private FusedLocationProviderClient mFusedLocationClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spin.setOnItemSelectedListener(this);
         mProgressBar = findViewById(R.id.progressBar);
         tv=findViewById(R.id.gotosignup);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,12 +138,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                                         String t=dataSnapshot.getValue().toString();
-
-
+                                        userupdate(Integer.parseInt(t));
                                         if((t=="3")||(type==Integer.parseInt(t))){
                                             Toast.makeText(MainActivity.this,"Login Success",Toast.LENGTH_LONG).show();
                                             Intent i=new Intent(MainActivity.this,Donor.class);
                                             startActivity(i);
+
                                         }
                                         else{
                                             return;
@@ -170,6 +177,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             progress.dismiss();
 
         }
+    }
+
+    public CurrentUser userupdate(int type) {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this,"Permissions",Toast.LENGTH_LONG).show();
+        }
+        mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<android.location.Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                if (task.isSuccessful()) {
+                    Location location = task.getResult();
+
+                    Log.d("latitude", String.valueOf(location.getLatitude()));
+                    Log.d("longitude", String.valueOf(location.getLongitude()));
+                    mAuth = FirebaseAuth.getInstance();
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    currentUser=new CurrentUser(user.getEmail(),user.getUid(),location.getLatitude(),location.getLongitude(),type);
+                }
+            }
+        });
+
+        return currentUser;
     }
 
     public class User {
