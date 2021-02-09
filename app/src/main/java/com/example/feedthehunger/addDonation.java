@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -31,6 +32,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
+import static android.content.Context.LOCATION_SERVICE;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 /**
@@ -110,12 +114,33 @@ public class addDonation extends Fragment implements View.OnClickListener {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getContext(),"Permissions",Toast.LENGTH_LONG).show();
         }
+
+
         mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<android.location.Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
                 if (task.isSuccessful()) {
                     Location location = task.getResult();
+                    Location l=null;
+                    LocationManager mLocationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
+                    List<String> providers = mLocationManager.getProviders(true);
+                    Location bestLocation = null;
+                    if(location==null){
 
+                        for (String provider : providers) {
+                            if(ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
+                                l = mLocationManager.getLastKnownLocation(provider);
+                            }
+                            if (l == null) {
+                                continue;
+                            }
+                            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                                bestLocation = l;
+                            }
+                        }
+                        location = bestLocation;
+
+                    }
                     Log.d("latitude", String.valueOf(location.getLatitude()));
                     Log.d("longitude", String.valueOf(location.getLongitude()));
                     mAuth = FirebaseAuth.getInstance();

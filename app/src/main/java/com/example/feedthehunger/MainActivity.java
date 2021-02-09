@@ -133,8 +133,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
                                 DatabaseReference mDbRef = mDatabase.getReference("users");
-                                Toast.makeText(MainActivity.this,user.getUid(),
-                                        Toast.LENGTH_SHORT).show();
                                 mDbRef.child(user.getUid()).child("type").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {

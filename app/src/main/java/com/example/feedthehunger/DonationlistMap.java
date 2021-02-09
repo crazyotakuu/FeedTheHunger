@@ -3,12 +3,14 @@ package com.example.feedthehunger;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,7 +41,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import static android.content.Context.LOCATION_SERVICE;
 import static com.example.feedthehunger.Constants.MAPVIEW_BUNDLE_KEY;
 
 public class DonationlistMap extends Fragment {
@@ -136,23 +140,50 @@ public class DonationlistMap extends Fragment {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getContext(), "Permissions", Toast.LENGTH_LONG).show();
         }
+
         mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
                 if (task.isSuccessful()) {
                     Location location = task.getResult();
+                    Location l=null;
+                    LocationManager mLocationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
+                    List<String> providers = mLocationManager.getProviders(true);
+                    Location bestLocation = null;
+                    if(location==null){
 
-                    Log.d("latitude", String.valueOf(location.getLatitude()));
-                    Log.d("longitude", String.valueOf(location.getLongitude()));
-                    double bottomBoundary = location.getLatitude() - .001;
-                    double leftBoundary = location.getLongitude() - .001;
-                    double topBoundary = location.getLatitude() + .001;
-                    double rightBoundary = location.getLongitude() + .001;
+                        for (String provider : providers) {
+                            if(ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
+                                l = mLocationManager.getLastKnownLocation(provider);
+                            }
+                            if (l == null) {
+                                continue;
+                            }
+                            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                                bestLocation = l;
+                            }
+                        }
+                        location = bestLocation;
+
+                    }
+
+                        Log.d("latitude", String.valueOf(location.getLatitude()));
+                        Log.d("longitude", String.valueOf(location.getLongitude()));
+                        double bottomBoundary = location.getLatitude() - .001;
+                        double leftBoundary = location.getLongitude() - .001;
+                        double topBoundary = location.getLatitude() + .001;
+                        double rightBoundary = location.getLongitude() + .001;
+                    googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(location.getLatitude()+0.0001,location.getLongitude()+0.00001))
+                            .title("Me"));
 
                     mMapBoundary = new LatLngBounds(
                             new LatLng(bottomBoundary, leftBoundary),
                             new LatLng(topBoundary, rightBoundary)
                     );
+                    Location startPoint=new Location("locationA");
+                    startPoint.setLatitude(location.getLatitude());
+                    startPoint.setLongitude(location.getLongitude());
 
                     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary, 0));
                     mUserPosition=new LatLng(location.getLatitude(),location.getLongitude());
@@ -162,14 +193,16 @@ public class DonationlistMap extends Fragment {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                         Donation Don = snapshot.getValue(Donation.class);
-                                        Toast.makeText(getActivity(),"Donors:checking" + Don.userid,Toast.LENGTH_LONG).show();
-                                        if(distance(location.getLatitude(),location.getLongitude(),Don.latitude,Don.longitude)<50.00){
+                                        //Toast.makeText(getActivity(),"Donors:checking" + Don.userid,Toast.LENGTH_LONG).show();
+                                        Location endPoint=new Location("locationA");
+                                        endPoint.setLatitude(Don.latitude);
+                                        endPoint.setLongitude(Don.longitude);
+                                        if(startPoint.distanceTo(endPoint)<15050.00){
                                             mDonorList.add(Don);
-                                            Toast.makeText(getActivity(),"Donors:Success" + Don.userid,Toast.LENGTH_LONG).show();
-                                            Marker markerPerth = googleMap.addMarker(new MarkerOptions()
+                                            //Toast.makeText(getActivity(),"Donors:Success" + Don.userid,Toast.LENGTH_LONG).show();
+                                             googleMap.addMarker(new MarkerOptions()
                                                     .position(new LatLng(Don.latitude,Don.longitude))
                                                     .title(Don.description));
-                                            markerPerth.setTag(0);
 
                                         }
 
@@ -186,30 +219,4 @@ public class DonationlistMap extends Fragment {
         });
 
     }
-
-    private double distance(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1))
-                * Math.sin(deg2rad(lat2))
-                + Math.cos(deg2rad(lat1))
-                * Math.cos(deg2rad(lat2))
-                * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        return (dist);
-    }
-
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
-    }
-
-    /**
-     * Determines the view boundary then sets the camera
-     * Sets the view
-     */
 }
