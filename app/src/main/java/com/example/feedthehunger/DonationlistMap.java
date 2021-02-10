@@ -3,14 +3,13 @@ package com.example.feedthehunger;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,19 +30,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static android.content.Context.LOCATION_SERVICE;
 import static com.example.feedthehunger.Constants.MAPVIEW_BUNDLE_KEY;
 
 public class DonationlistMap extends Fragment {
@@ -54,6 +47,8 @@ public class DonationlistMap extends Fragment {
     private MapView mMapView;
 
     private LatLng mUserPosition;
+
+    Location startPoint;
 
     //vars
     private ArrayList<Donation> mDonorList = new ArrayList<>();
@@ -73,13 +68,19 @@ public class DonationlistMap extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
             mGoogleMap = googleMap;
-            addMapMarkers(mGoogleMap);
+            getDonationList(mGoogleMap);
+
         }
     };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+    }
 
     @Nullable
     @Override
@@ -88,8 +89,11 @@ public class DonationlistMap extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        //getDonationList(mGoogleMap);
+        //initGoogleMap(savedInstanceState);
         return inflater.inflate(R.layout.fragment_donationlist_map, container, false);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -106,31 +110,7 @@ public class DonationlistMap extends Fragment {
         if (mGoogleMap != null) {
 
 
-
             getDonationList(googleMap);
-            /*Toast.makeText(getActivity(),"Donors:size " + mDonorList.size(),Toast.LENGTH_LONG).show();
-            for (Donation userLocation : mDonorList) {
-
-                Log.d("addMapMarkers",  + userLocation.latitude+":::"+userLocation.longitude);
-                Toast.makeText(getActivity(),"Donors:List " + userLocation.userid,Toast.LENGTH_LONG).show();
-            }
-            for (Donation userLocation : mDonorList) {
-
-                Log.d("addMapMarkers",  + userLocation.latitude+":::"+userLocation.longitude);
-                try {
-                    String snippet = userLocation.address;
-
-                    ClusterMarker newClusterMarker = new ClusterMarker(userLocation.description,snippet,userLocation,new LatLng(userLocation.latitude,userLocation.longitude));
-                    mClusterManager.addItem(newClusterMarker);
-                    mClusterMarkers.add(newClusterMarker);
-                    Toast.makeText(getActivity(),"Donors:point " + userLocation.userid,Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "Donors " + userLocation.userid);
-                } catch (NullPointerException e) {
-                    Log.e(TAG, "addMapMarkers: NullPointerException: " + e.getMessage());
-                }
-
-            }
-            mClusterManager.cluster();*/
 
         }
     }
@@ -146,7 +126,7 @@ public class DonationlistMap extends Fragment {
             public void onComplete(@NonNull Task<Location> task) {
                 if (task.isSuccessful()) {
                     Location location = task.getResult();
-                    Location l=null;
+                    /*Location l=null;
                     LocationManager mLocationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
                     List<String> providers = mLocationManager.getProviders(true);
                     Location bestLocation = null;
@@ -165,49 +145,70 @@ public class DonationlistMap extends Fragment {
                         }
                         location = bestLocation;
 
-                    }
+                    }*/
+                    Toast.makeText(getActivity(), location.toString(), Toast.LENGTH_SHORT).show();
 
-                        Log.d("latitude", String.valueOf(location.getLatitude()));
-                        Log.d("longitude", String.valueOf(location.getLongitude()));
-                        double bottomBoundary = location.getLatitude() - .001;
-                        double leftBoundary = location.getLongitude() - .001;
-                        double topBoundary = location.getLatitude() + .001;
-                        double rightBoundary = location.getLongitude() + .001;
-                    googleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(location.getLatitude()+0.0001,location.getLongitude()+0.00001))
-                            .title("Me"));
+                    Log.d("latitude", String.valueOf(location.getLatitude()));
+                    Log.d("longitude", String.valueOf(location.getLongitude()));
+                    double bottomBoundary = location.getLatitude() - .001;
+                    double leftBoundary = location.getLongitude() - .001;
+                    double topBoundary = location.getLatitude() + .001;
+                    double rightBoundary = location.getLongitude() + .001;
 
                     mMapBoundary = new LatLngBounds(
                             new LatLng(bottomBoundary, leftBoundary),
                             new LatLng(topBoundary, rightBoundary)
                     );
-                    Location startPoint=new Location("locationA");
+
+                    Toast.makeText(getActivity(), mMapBoundary.toString(), Toast.LENGTH_SHORT).show();
+
+                    startPoint = new Location("locationA");
                     startPoint.setLatitude(location.getLatitude());
                     startPoint.setLongitude(location.getLongitude());
 
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary, 0));
-                    mUserPosition=new LatLng(location.getLatitude(),location.getLongitude());
+
+                    mUserPosition = new LatLng(location.getLatitude(), location.getLongitude());
                     FirebaseDatabase.getInstance().getReference().child("donations")
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                    int t = 0;
                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                         Donation Don = snapshot.getValue(Donation.class);
                                         //Toast.makeText(getActivity(),"Donors:checking" + Don.userid,Toast.LENGTH_LONG).show();
-                                        Location endPoint=new Location("locationA");
+                                        Location endPoint = new Location("locationA");
                                         endPoint.setLatitude(Don.latitude);
                                         endPoint.setLongitude(Don.longitude);
-                                        if(startPoint.distanceTo(endPoint)<15050.00){
+                                        if (startPoint.distanceTo(endPoint) < 15000.00) {
+
+
+                                            //Toast.makeText(getActivity(),t++ +"",Toast.LENGTH_SHORT).show();
                                             mDonorList.add(Don);
+                                            Toast.makeText(getActivity(), mDonorList.size() + " ", Toast.LENGTH_LONG).show();
                                             //Toast.makeText(getActivity(),"Donors:Success" + Don.userid,Toast.LENGTH_LONG).show();
-                                             googleMap.addMarker(new MarkerOptions()
-                                                    .position(new LatLng(Don.latitude,Don.longitude))
-                                                    .title(Don.description));
+                                            //googleMap.addMarker(new MarkerOptions().position(new LatLng(Don.latitude,Don.longitude)).title(Don.description));
 
                                         }
 
                                     }
+
+
+                                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary, 0));
+                                    //Toast.makeText(getActivity(),mDonorList.size()+"",Toast.LENGTH_SHORT).show();
+                                    for (Donation i : mDonorList) {
+                                        Toast.makeText(getActivity(), i.latitude + " " + i.longitude, Toast.LENGTH_SHORT).show();
+                                        Marker mperth = googleMap.addMarker(new MarkerOptions()
+                                                .position(new LatLng(i.latitude, i.longitude))
+                                                .title(i.description));
+                                        mperth.setTag(0);
+                                        Marker mperth1 = googleMap.addMarker(new MarkerOptions()
+                                                .position(new LatLng(i.latitude + 1, i.longitude + 1))
+                                                .title(i.description));
+                                        mperth1.setTag(0);
+
+                                    }
                                 }
+
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
@@ -219,4 +220,6 @@ public class DonationlistMap extends Fragment {
         });
 
     }
+
+
 }
