@@ -24,6 +24,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -71,6 +72,16 @@ public class DonationlistMap extends Fragment {
 
             mGoogleMap = googleMap;
             getDonationList(mGoogleMap);
+
+            mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    if((int)marker.getTag()!=-1) {
+                        Toast.makeText(getContext(), mDonorList.get((int) marker.getTag()).address + " ", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+            });
 
         }
     };
@@ -174,7 +185,9 @@ public class DonationlistMap extends Fragment {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     int t = 0;
                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
                                         Donation Don = snapshot.getValue(Donation.class);
+
                                         //Toast.makeText(getActivity(),"Donors:checking" + Don.userid,Toast.LENGTH_LONG).show();
                                         Location endPoint = new Location("locationA");
                                         endPoint.setLatitude(Don.latitude);
@@ -184,7 +197,7 @@ public class DonationlistMap extends Fragment {
 
                                             //Toast.makeText(getActivity(),t++ +"",Toast.LENGTH_SHORT).show();
                                             mDonorList.add(Don);
-                                            Toast.makeText(getActivity(), mDonorList.size() + " ", Toast.LENGTH_LONG).show();
+                                            //Toast.makeText(getActivity(), mDonorList.size() + " ", Toast.LENGTH_LONG).show();
                                             //Toast.makeText(getActivity(),"Donors:Success" + Don.userid,Toast.LENGTH_LONG).show();
                                             //googleMap.addMarker(new MarkerOptions().position(new LatLng(Don.latitude,Don.longitude)).title(Don.description));
 
@@ -195,16 +208,18 @@ public class DonationlistMap extends Fragment {
 
                                     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary, 0));
                                     //Toast.makeText(getActivity(),mDonorList.size()+"",Toast.LENGTH_SHORT).show();
+                                    Marker me = googleMap.addMarker(new MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                            .position(mUserPosition)
+                                            .title("You"));
+                                    me.setTag(-1);
+                                    int k=0;
                                     for (Donation i : mDonorList) {
-                                        Toast.makeText(getActivity(), i.latitude + " " + i.longitude, Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getActivity(), i.latitude + " " + i.longitude, Toast.LENGTH_SHORT).show();
                                         Marker mperth = googleMap.addMarker(new MarkerOptions()
                                                 .position(new LatLng(i.latitude, i.longitude))
                                                 .title(i.description));
-                                        mperth.setTag(0);
-                                        Marker mperth1 = googleMap.addMarker(new MarkerOptions()
-                                                .position(new LatLng(i.latitude + 1, i.longitude + 1))
-                                                .title(i.description));
-                                        mperth1.setTag(0);
+                                        mperth.setTag(k++);
 
                                     }
                                 }
