@@ -6,7 +6,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -31,8 +33,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -77,7 +82,10 @@ public class DonationlistMap extends Fragment {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     if((int)marker.getTag()!=-1) {
-                        Toast.makeText(getContext(), mDonorList.get((int) marker.getTag()).address + " ", Toast.LENGTH_SHORT).show();
+                        showAlertDialogButtonClicked(mDonorList.get((int)marker.getTag()));
+                    }
+                    else{
+                        Toast.makeText(getActivity(),"Me",Toast.LENGTH_LONG).show();
                     }
                     return true;
                 }
@@ -192,7 +200,7 @@ public class DonationlistMap extends Fragment {
                                         Location endPoint = new Location("locationA");
                                         endPoint.setLatitude(Don.latitude);
                                         endPoint.setLongitude(Don.longitude);
-                                        if (startPoint.distanceTo(endPoint) < 15000.00) {
+                                        if (startPoint.distanceTo(endPoint) < 15000.00 && Don.status==0) {
 
 
                                             //Toast.makeText(getActivity(),t++ +"",Toast.LENGTH_SHORT).show();
@@ -207,7 +215,7 @@ public class DonationlistMap extends Fragment {
 
 
                                     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary, 0));
-                                    //Toast.makeText(getActivity(),mDonorList.size()+"",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(),mDonorList.size()+"",Toast.LENGTH_SHORT).show();
                                     Marker me = googleMap.addMarker(new MarkerOptions()
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                                             .position(mUserPosition)
@@ -217,6 +225,7 @@ public class DonationlistMap extends Fragment {
                                     for (Donation i : mDonorList) {
                                         //Toast.makeText(getActivity(), i.latitude + " " + i.longitude, Toast.LENGTH_SHORT).show();
                                         Marker mperth = googleMap.addMarker(new MarkerOptions()
+                                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                                                 .position(new LatLng(i.latitude, i.longitude))
                                                 .title(i.description));
                                         mperth.setTag(k++);
@@ -234,6 +243,39 @@ public class DonationlistMap extends Fragment {
             }
         });
 
+    }
+
+    public void showAlertDialogButtonClicked(Donation donation) {
+
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Request");
+        StringBuilder s=new StringBuilder();
+        s.append("Desciption: "+donation.description);
+        s.append("\n");
+        s.append("quantity: "+donation.quantity);
+        s.append("\n");
+        s.append("Address: "+donation.address);
+        s.append("\n");
+        s.append("Expiry Date: "+donation.expirydate);
+
+        builder.setMessage(s.toString());
+
+        // add the buttons
+        builder.setPositiveButton("Request", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference mDatabase =FirebaseDatabase.getInstance().getReference().child("donations").child(donation.donationid);
+                mDatabase.child("status").setValue(1);
+                mDatabase.child("doneeid").setValue(user.getUid());
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 

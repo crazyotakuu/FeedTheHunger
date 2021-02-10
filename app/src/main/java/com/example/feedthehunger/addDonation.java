@@ -147,8 +147,8 @@ public class addDonation extends Fragment implements View.OnClickListener {
                     FirebaseUser user = mAuth.getCurrentUser();
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("donations");
                     String donId = mDatabase.push().getKey();
-                    mDatabase.child(donId).setValue(new Donation(user.getUid(),foodtype.getText().toString(),quanity.getText().toString()
-                            ,des.getText().toString(),address.getText().toString(),expdate.getText().toString(),location.getLatitude(),location.getLongitude()));
+                    mDatabase.child(donId).setValue(new Donation(donId,foodtype.getText().toString(),quanity.getText().toString()
+                            ,des.getText().toString(),address.getText().toString(),expdate.getText().toString(),location.getLatitude(),location.getLongitude(),user.getUid(),0,""));
                     Intent i=new Intent(getContext(),MainActivity.class);
                     startActivity(i);
                 }
