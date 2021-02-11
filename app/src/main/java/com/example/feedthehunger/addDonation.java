@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ import static androidx.core.content.ContextCompat.getSystemService;
 public class addDonation extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
+    public static String uid;
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -147,10 +149,28 @@ public class addDonation extends Fragment implements View.OnClickListener {
                     FirebaseUser user = mAuth.getCurrentUser();
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("donations");
                     String donId = mDatabase.push().getKey();
+                    uid=user.getUid();
                     mDatabase.child(donId).setValue(new Donation(donId,foodtype.getText().toString(),quanity.getText().toString()
                             ,des.getText().toString(),address.getText().toString(),expdate.getText().toString(),location.getLatitude(),location.getLongitude(),user.getUid(),0,""));
-                    Intent i=new Intent(getContext(),MainActivity.class);
-                    startActivity(i);
+//                    Intent i=new Intent(getContext(),MainActivity.class);
+//                    startActivity(i);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(),"Donation Added",Toast.LENGTH_SHORT).show();
+                            foodtype.setText("");
+                            foodtype.setHint("Enter the Type of Food");
+                            quanity.setText("");
+                            quanity.setHint("Enter the Quantity of Food");
+                            des.setText("");
+                            des.setHint("Enter the Description");
+                            address.setText("");
+                            address.setHint("Enter the Address");
+                            expdate.setText("");
+                            expdate.setHint("Enter the Expiry-Date");
+                        }
+                    }, 3000); //the time you want to delay in milliseconds
                 }
             }
         });

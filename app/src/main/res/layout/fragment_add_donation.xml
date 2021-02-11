@@ -42,11 +42,11 @@
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:id="@+id/linearLayoutCompat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
             <ImageView
                 android:id="@+id/imageview_login"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 app:srcCompat="@drawable/ic_diet"></ImageView>
 
             <EditText
@@ -65,13 +65,13 @@
                 android:hint="Enter the Type of Food"
                 android:textSize="18dp"></EditText>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:id="@+id/linearLayoutCompat1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
@@ -81,7 +81,7 @@
             <ImageView
                 android:id="@+id/imageview_login1"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 app:srcCompat="@drawable/ic_weight"></ImageView>
 
             <EditText
@@ -91,13 +91,13 @@
                 android:hint="Enter the Quantity of Food"
                 android:textSize="18dp"></EditText>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:id="@+id/linearLayoutCompat2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
@@ -107,25 +107,25 @@
             <ImageView
                 android:id="@+id/imageview_login2"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_productdescription"></ImageView>
 
             <EditText
                 android:id="@+id/des"
                 android:layout_width="250dp"
-                android:layout_height="100dp"
-                android:hint="Enter the description"
+                android:layout_height="80dp"
+                android:hint="Enter the Description"
                 android:lines="5"
                 android:textSize="18dp"></EditText>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:id="@+id/linearLayoutCompat3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
@@ -135,25 +135,25 @@
             <ImageView
                 android:id="@+id/imageview_login3"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_address"></ImageView>
 
             <EditText
                 android:id="@+id/address"
                 android:layout_width="250dp"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:hint="Enter the Address"
                 android:lines="5"
                 android:textSize="18dp"></EditText>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:id="@+id/linearLayoutCompat4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
@@ -163,7 +163,7 @@
             <ImageView
                 android:id="@+id/imageview_login4"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_calendar"></ImageView>
 
@@ -175,18 +175,19 @@
                 android:inputType="date"
                 android:textSize="18dp"></EditText>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
 
         <Button
             android:id="@+id/buttonadddon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:text="Submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4"
-            app:layout_constraintVertical_bias="0.100000024" />
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="match_parent">
+
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:srcCompat="@drawable/ic_donationheart"-->
+<!--        android:layout_margin="20dp"/>-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:id="@+id/Type"-->
+<!--            android:textSize="20dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:text="Food Type"-->
+<!--            android:layout_height="wrap_content"></TextView>-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:id="@+id/Description"-->
+<!--            android:text="Food description"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:textSize="16dp"-->
+<!--            android:layout_height="wrap_content"></TextView>-->
+<!--    </LinearLayout>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/donation_info"
+        android:textSize="30dp"
+        android:layout_margin="10dp"
+        android:layout_height="match_parent"></TextView>
+</LinearLayout>

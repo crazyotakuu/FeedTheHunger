@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Donor">
+
     <com.google.android.material.appbar.AppBarLayout android:layout_height="wrap_content"
         android:layout_width="match_parent">
-
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
+            app:tabMode="scrollable"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="60dp">
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,6 +30,11 @@
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_clock"
                 android:text="History">
+            </com.google.android.material.tabs.TabItem>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="20dp"
+                android:icon="@drawable/ic_logout"
+                android:layout_height="wrap_content">
             </com.google.android.material.tabs.TabItem>
         </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>

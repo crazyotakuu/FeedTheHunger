@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toolbar;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -32,11 +33,18 @@ public class Donor extends AppCompatActivity {
     private addDonation addDonation;
     private checkStatus checkStatus;
     private checkHistory checkHistory;
+    private Logout logout;
+
+//    changes
+LocationManager locationManager;
+    double latitude,longitude;
+    private FusedLocationProviderClient mFusedLocationClient;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor);
 
@@ -45,16 +53,19 @@ public class Donor extends AppCompatActivity {
         addDonation = new addDonation();
         checkStatus = new checkStatus();
         checkHistory = new checkHistory();
+        logout=new Logout();
         tablayout.setupWithViewPager(viewpager);
         ViewPagerAdapter viewpageadapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
 
         viewpageadapter.addFragment(addDonation, "Donation");
-        viewpageadapter.addFragment(checkStatus, "Weight");
-        viewpageadapter.addFragment(checkHistory, "Nearby");
+        viewpageadapter.addFragment(checkStatus, "Status");
+        viewpageadapter.addFragment(checkHistory, "History");
+        viewpageadapter.addFragment(logout,"");
         viewpager.setAdapter(viewpageadapter);
         tablayout.getTabAt(0).setIcon(R.drawable.ic_donation);
         tablayout.getTabAt(1).setIcon(R.drawable.ic_status);
         tablayout.getTabAt(2).setIcon(R.drawable.ic_clock);
+        tablayout.getTabAt(3).setIcon(R.drawable.ic_logout);
         //location code starts from here
 
 

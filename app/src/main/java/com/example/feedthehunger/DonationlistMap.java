@@ -101,6 +101,7 @@ public class DonationlistMap extends Fragment {
 
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -137,7 +138,7 @@ public class DonationlistMap extends Fragment {
     private void getDonationList(GoogleMap googleMap) {
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getContext(), "Permissions", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Please give Permissions", Toast.LENGTH_LONG).show();
         }
 
         mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -165,7 +166,7 @@ public class DonationlistMap extends Fragment {
                         location = bestLocation;
 
                     }*/
-                    Toast.makeText(getActivity(), location.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), location.toString(), Toast.LENGTH_SHORT).show();
 
                     Log.d("latitude", String.valueOf(location.getLatitude()));
                     Log.d("longitude", String.valueOf(location.getLongitude()));
@@ -179,7 +180,7 @@ public class DonationlistMap extends Fragment {
                             new LatLng(topBoundary, rightBoundary)
                     );
 
-                    Toast.makeText(getActivity(), mMapBoundary.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), mMapBoundary.toString(), Toast.LENGTH_SHORT).show();
 
                     startPoint = new Location("locationA");
                     startPoint.setLatitude(location.getLatitude());
@@ -214,8 +215,8 @@ public class DonationlistMap extends Fragment {
                                     }
 
 
-                                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary, 0));
-                                    Toast.makeText(getActivity(),mDonorList.size()+"",Toast.LENGTH_SHORT).show();
+                                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary,1000,1000,0));
+//                                    Toast.makeText(getActivity(),mDonorList.size()+"",Toast.LENGTH_SHORT).show();
                                     Marker me = googleMap.addMarker(new MarkerOptions()
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                                             .position(mUserPosition)

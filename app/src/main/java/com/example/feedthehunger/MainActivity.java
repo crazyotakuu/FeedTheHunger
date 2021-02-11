@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+
 import android.app.Fragment;
 
 import android.Manifest;
@@ -19,6 +21,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private FirebaseAuth mAuth;
     private int type;
     private static final String TAG = "MainActivity";
-    private boolean mLocationPermissionGranted = false;
+    private boolean mLocationPermissionGranted = true;
     private ProgressBar mProgressBar;
     private FusedLocationProviderClient mFusedLocationClient;
     @Override
@@ -86,9 +89,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
                 if(mail.getText().toString().equals("")||pass.getText().toString().equals("")||type==-1){
-                    Toast.makeText(getApplicationContext(),"Enter all the feilds",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Enter all the fields",Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 authenticate a=new authenticate();
                 a.execute();
             }
@@ -98,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
+
     }
 
     @Override
@@ -111,13 +116,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private class authenticate extends AsyncTask<Void, Void, Void> {
-        ProgressDialog progress;
+//        ProgressDialog progress;
 
         @Override
         protected void onPreExecute() //Starts the progress dailog
         {
-            progress = ProgressDialog.show(MainActivity.this, "Loging in",
-                    "Loading! Please Wait...", true);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -139,10 +143,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                                         String t=dataSnapshot.getValue().toString();
 
-                                        Toast.makeText(MainActivity.this,type+" "+t,
-                                                Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(MainActivity.this,type+" "+t,
+//                                                Toast.LENGTH_SHORT).show();
                                         if(t.equals("1")&&(type==Integer.parseInt(t))){
-                                            Toast.makeText(MainActivity.this,"Login Success",Toast.LENGTH_LONG).show();
+//                                            Toast.makeText(MainActivity.this,"Login Success",Toast.LENGTH_LONG).show();
                                             Intent i=new Intent(MainActivity.this,Donor.class);
                                             startActivity(i);
 
@@ -178,7 +182,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         @Override
         protected void onPostExecute(Void aVoid) // disimissing progress dialoge, showing error and setting up my ListView
         {
-            progress.dismiss();
+//            progress.dismiss();
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressBar.setVisibility(View.GONE);
+                }
+            }, 5000); //the time you want to delay in milliseconds
 
         }
     }
@@ -336,5 +348,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
     }
+
 
 }

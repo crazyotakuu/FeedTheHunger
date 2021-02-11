@@ -1,7 +1,6 @@
 package com.example.feedthehunger;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,15 +26,15 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link checkHistory#newInstance} factory method to
+ * Use the {@link status#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class checkHistory extends Fragment {
+public class status extends Fragment {
     ListView listView;
     FirebaseDatabase database;
     DatabaseReference ref;
-    private FirebaseAuth mAuth;
     ArrayList<String> new_list;
+    private FirebaseAuth mAuth;
     ArrayList<String> list;
     ArrayAdapter<String> adapter;
     Donation donation;
@@ -48,7 +47,7 @@ public class checkHistory extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public checkHistory() {
+    public status() {
         // Required empty public constructor
     }
 
@@ -58,11 +57,11 @@ public class checkHistory extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment checkHistory.
+     * @return A new instance of fragment status.
      */
     // TODO: Rename and change types and number of parameters
-    public static checkHistory newInstance(String param1, String param2) {
-        checkHistory fragment = new checkHistory();
+    public static status newInstance(String param1, String param2) {
+        status fragment = new status();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -83,10 +82,10 @@ public class checkHistory extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_check_history, container, false);
+        return inflater.inflate(R.layout.fragment_status, container, false);
     }
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        listView = getView().findViewById(R.id.listview_check_history);
+        listView = getView().findViewById(R.id.listview_status);
         database= FirebaseDatabase.getInstance();
         ref=database.getReference("donations");
         donation=new Donation();
@@ -95,7 +94,7 @@ public class checkHistory extends Fragment {
         String uid=user.getUid();
         list=new ArrayList<>();
         new_list=new ArrayList<>();
-         adapter=new ArrayAdapter<String>(getActivity(),R.layout.donation_info,R.id.donation_info,new_list);
+        adapter=new ArrayAdapter<String>(getActivity(),R.layout.donation_info,R.id.donation_info,new_list);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -110,7 +109,7 @@ public class checkHistory extends Fragment {
 //                    if(str.equals(uid)){
 //                        list.add(new_list.get(i));
 //                    }
-                    if(donation.donorid.equals(uid) && (donation.status==2)){
+                    if(donation.doneeid.equals(uid) && (donation.status==1)){
                         list.add(donation.donationid+" "+donation.type+" "+donation.description+" "+donation.status);
                         new_list.add(donation.type+" "+donation.description);
                     }
@@ -127,20 +126,20 @@ public class checkHistory extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String str=list.get(position);
-                    String new_str[]=str.split(" ");
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Details");
-                    StringBuilder s=new StringBuilder();
-                    s.append("Type: "+new_str[1]);
-                    s.append("\n");
-                    s.append("Description "+new_str[2]);
-                    s.append("\n");
-                    builder.setMessage(s.toString());
-                    builder.setNegativeButton("Cancel", null);
+                String new_str[]=str.split(" ");
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Details");
+                StringBuilder s=new StringBuilder();
+                s.append("Type: "+new_str[1]);
+                s.append("\n");
+                s.append("Description "+new_str[2]);
+                s.append("\n");
+                builder.setMessage(s.toString());
+                builder.setNegativeButton("Cancel", null);
 
-                    // create and show the alert dialog
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
 
             }

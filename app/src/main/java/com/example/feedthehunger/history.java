@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,10 +28,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link checkHistory#newInstance} factory method to
+ * Use the {@link history#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class checkHistory extends Fragment {
+public class history extends Fragment {
     ListView listView;
     FirebaseDatabase database;
     DatabaseReference ref;
@@ -48,7 +49,7 @@ public class checkHistory extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public checkHistory() {
+    public history() {
         // Required empty public constructor
     }
 
@@ -58,11 +59,11 @@ public class checkHistory extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment checkHistory.
+     * @return A new instance of fragment history.
      */
     // TODO: Rename and change types and number of parameters
-    public static checkHistory newInstance(String param1, String param2) {
-        checkHistory fragment = new checkHistory();
+    public static history newInstance(String param1, String param2) {
+        history fragment = new history();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -83,11 +84,11 @@ public class checkHistory extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_check_history, container, false);
+        return inflater.inflate(R.layout.fragment_history, container, false);
     }
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        listView = getView().findViewById(R.id.listview_check_history);
-        database= FirebaseDatabase.getInstance();
+        listView = getView().findViewById(R.id.listview_history);
+        database=FirebaseDatabase.getInstance();
         ref=database.getReference("donations");
         donation=new Donation();
         mAuth = FirebaseAuth.getInstance();
@@ -95,7 +96,7 @@ public class checkHistory extends Fragment {
         String uid=user.getUid();
         list=new ArrayList<>();
         new_list=new ArrayList<>();
-         adapter=new ArrayAdapter<String>(getActivity(),R.layout.donation_info,R.id.donation_info,new_list);
+        adapter=new ArrayAdapter<String>(getActivity(),R.layout.donation_info,R.id.donation_info,new_list);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -110,7 +111,8 @@ public class checkHistory extends Fragment {
 //                    if(str.equals(uid)){
 //                        list.add(new_list.get(i));
 //                    }
-                    if(donation.donorid.equals(uid) && (donation.status==2)){
+//                    Toast.makeText(getActivity(),donation.doneeid+" "+uid,Toast.LENGTH_LONG).show();
+                    if(donation.doneeid.equals(uid) && (donation.status==2)){
                         list.add(donation.donationid+" "+donation.type+" "+donation.description+" "+donation.status);
                         new_list.add(donation.type+" "+donation.description);
                     }
@@ -129,21 +131,22 @@ public class checkHistory extends Fragment {
                 String str=list.get(position);
                     String new_str[]=str.split(" ");
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Details");
+                    builder.setTitle("Accept");
                     StringBuilder s=new StringBuilder();
                     s.append("Type: "+new_str[1]);
                     s.append("\n");
                     s.append("Description "+new_str[2]);
                     s.append("\n");
                     builder.setMessage(s.toString());
-                    builder.setNegativeButton("Cancel", null);
 
+                    // add the buttons
+                    builder.setNegativeButton("Cancel", null);
                     // create and show the alert dialog
                     AlertDialog dialog = builder.create();
                     dialog.show();
 
+                }
 
-            }
         });
     }
 }
