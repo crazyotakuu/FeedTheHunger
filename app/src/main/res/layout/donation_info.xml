@@ -36,7 +36,7 @@
     <TextView
         android:layout_width="match_parent"
         android:id="@+id/donation_info"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:layout_margin="10dp"
         android:layout_height="match_parent"></TextView>
 </LinearLayout>

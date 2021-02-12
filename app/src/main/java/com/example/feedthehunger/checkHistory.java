@@ -110,9 +110,9 @@ public class checkHistory extends Fragment {
 //                    if(str.equals(uid)){
 //                        list.add(new_list.get(i));
 //                    }
-                    if(donation.donorid.equals(uid) && (donation.status==2)){
-                        list.add(donation.donationid+" "+donation.type+" "+donation.description+" "+donation.status);
-                        new_list.add(donation.type+" "+donation.description);
+                    if(donation.donorid.equals(uid) && (donation.status==3)){
+                        list.add(donation.donationid+" "+donation.type+" "+donation.description+" "+donation.status+" "+"Completed");
+                        new_list.add("Type: "+donation.type+"\n"+"Description: "+donation.description+"\n"+"Status: Completed");
                     }
                 }
                 listView.setAdapter(adapter);
@@ -135,6 +135,8 @@ public class checkHistory extends Fragment {
                     s.append("\n");
                     s.append("Description "+new_str[2]);
                     s.append("\n");
+                s.append("Status "+new_str[4]);
+                s.append("\n");
                     builder.setMessage(s.toString());
                     builder.setNegativeButton("Cancel", null);
 

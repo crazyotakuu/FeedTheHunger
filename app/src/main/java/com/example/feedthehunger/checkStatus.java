@@ -116,8 +116,15 @@ public class checkStatus extends Fragment {
 //                    Toast.makeText(getActivity(),donation.donorid+" "+uid,Toast.LENGTH_LONG).show();
                     if(donation.donorid.equals(uid) && (donation.status==0 ||donation.status==1)){
 
-                        list.add(donation.donationid+" "+donation.type+" "+donation.description+" "+donation.status);
-                        new_list.add(donation.type+" "+donation.description);
+
+                        String sts="";
+                        if(donation.status==0){
+                            sts+="No Activity";
+                        }else if(donation.status==1){
+                            sts+="Donee Requested";
+                        }
+                        new_list.add("Type: "+donation.type+"\n"+"Description: "+donation.description+"\n"+"Status: "+sts);
+                        list.add(donation.donationid+" "+donation.type+" "+donation.description+" "+donation.status+" "+sts);
                     }
                 }
                 listView.setAdapter(adapter);
@@ -132,14 +139,16 @@ public class checkStatus extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String str=list.get(position);
-                if(str.charAt(str.length()-1)=='1'){
-                    String new_str[]=str.split(" ");
+                String new_str[]=str.split(" ");
+                if(new_str[3].equals("1")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Accept");
                     StringBuilder s=new StringBuilder();
                     s.append("Type: "+new_str[1]);
                     s.append("\n");
                     s.append("Description "+new_str[2]);
+                    s.append("\n");
+                    s.append("Status "+new_str[4]);
                     s.append("\n");
                     builder.setMessage(s.toString());
 
@@ -160,13 +169,14 @@ public class checkStatus extends Fragment {
 
                 }
                 else{
-                    String new_str[]=str.split(" ");
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Details");
                     StringBuilder s=new StringBuilder();
                     s.append("Type: "+new_str[1]);
                     s.append("\n");
                     s.append("Description: "+new_str[2]);
+                    s.append("\n");
+                    s.append("Status: "+new_str[4]);
                     s.append("\n");
                     builder.setMessage(s.toString());
 
@@ -178,5 +188,6 @@ public class checkStatus extends Fragment {
                 }
             }
         });
+
     }
 }

@@ -113,8 +113,8 @@ public class history extends Fragment {
 //                    }
 //                    Toast.makeText(getActivity(),donation.doneeid+" "+uid,Toast.LENGTH_LONG).show();
                     if(donation.doneeid.equals(uid) && (donation.status==2)){
-                        list.add(donation.donationid+" "+donation.type+" "+donation.description+" "+donation.status);
-                        new_list.add(donation.type+" "+donation.description);
+                        list.add(donation.donationid+" "+donation.type+" "+donation.description+" "+donation.status+" "+"completed");
+                        new_list.add("Type: "+donation.type+"\n"+"Description: "+donation.description+"\n"+"Status: completed");
                     }
                 }
                 listView.setAdapter(adapter);
@@ -137,6 +137,8 @@ public class history extends Fragment {
                     s.append("\n");
                     s.append("Description "+new_str[2]);
                     s.append("\n");
+                s.append("Status "+new_str[4]);
+                s.append("\n");
                     builder.setMessage(s.toString());
 
                     // add the buttons
